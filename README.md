@@ -3,7 +3,7 @@
 A jamovi module for instrumental-variable (IV) analysis: estimators, first-stage and weak-instrument diagnostics, weak-instrument-robust inference,
 overidentification tests, plausibly exogenous instruments, LATE, shift-share designs and marginal treatment effects. The estimation engine is written in
 base R (no dependency on `AER`, `ivreg` or `fixest`) and is checked against R packages and Stata (`ivreg2`, `ivreghdfe`, `weakiv`, `weakivtest`,
-`plausexog`, `mtefe`). Chinese summary: [README.zh.md](README.zh.md).
+`plausexog`, `mtefe`). Chinese summary: [README.zh.md](README.zh.md). Japanese summary: [README.ja.md](README.ja.md).
 
 ## Analyses (jamovi menu: IV)
 
