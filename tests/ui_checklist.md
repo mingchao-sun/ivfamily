@@ -39,7 +39,7 @@ Expect: reduced form -0.426, first stage 0.0675, LATE -6.314 (s.e. 1.275); share
 Dataset: Cigarette demand. Outcome `lq`; Endogenous `lp`; Instruments `tdiff`, `tax_r`; Controls `li`; Robust (large-sample, untick small-sample corrections to match Stata). delta 0.05; LTZ standard deviation 0.02, mean 0.01.
 Expect: tipping delta 0.0074; union interval at delta 0.05 [-7.00, 4.76]; LTZ interval [-5.72, 1.09]; the plot shows a widening band with a dashed zero line.
 
-## 9. Shift-Share (Bartik) IV (new in 0.2.0)
+## 9. Shift-Share (Bartik) IV
 Dataset: Simulated shift-share design (long form: one row per region and sector, 4,000 rows). Outcome `y`; Endogenous regressor `d`; Region `region`; Sector (shock) `sector`; Exposure share `share`; Shock `shock`; Controls `x1`; Weights `pop`; Region cluster `state`; Sector cluster `sector_group`.
 Set `region`, `sector`, `state` and `sector_group` to ID or Nominal; the others Continuous.
 Expect: coefficient 0.513; standard errors 0.124 (homoskedastic), 0.145 (robust), 0.104 (state clusters), AKM 0.188, AKM0 0.392 with confidence set 0.046 to 1.583; first stage 0.938 (AKM s.e. 0.065, F 207); info table: 500 regions, 40 sectors, effective number of sectors 39.2, shares add up to 1.

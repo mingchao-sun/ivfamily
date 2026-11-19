@@ -1,8 +1,11 @@
-# ivfamily: Instrumental Variables Family for jamovi
+# ivfamily — instrumental variables in jamovi
 
-A jamovi module for instrumental-variable (IV) analysis, in the menu group **IV**. The estimation engine is written in base R
-(no dependency on `AER`, `ivreg` or `fixest`) and is checked against R packages and Stata (`ivreg2`, `ivreghdfe`, `weakiv`,
-`weakivtest`, `plausexog`).
+A jamovi module for instrumental-variable (IV) analysis: estimators, first-stage and weak-instrument diagnostics, weak-instrument-robust inference,
+overidentification tests, plausibly exogenous instruments, LATE, shift-share designs and marginal treatment effects. The estimation engine is written in
+base R (no dependency on `AER`, `ivreg` or `fixest`) and is checked against R packages and Stata (`ivreg2`, `ivreghdfe`, `weakiv`, `weakivtest`,
+`plausexog`, `mtefe`). Chinese summary: [README.zh.md](README.zh.md).
+
+## Analyses (jamovi menu: IV)
 
 | Analysis | What it does |
 |---|---|
@@ -14,50 +17,66 @@ A jamovi module for instrumental-variable (IV) analysis, in the menu group **IV*
 | **Overidentification and Endogeneity** | Sargan / Hansen J, difference-in-Hansen (C) tests for chosen instruments or each instrument in turn, endogeneity test |
 | **Plausibly Exogenous Instruments** | Conley, Hansen and Rossi (2012): union of confidence intervals, tipping point, local-to-zero approximation |
 | **Shift-Share (Bartik) IV** | Instrument built from sector shocks and regional exposure shares; AKM and AKM0 exposure-robust inference (Adao, Kolesar and Morales, 2019), first stage, effective number of sectors |
+| **Marginal Treatment Effects** | Local IV with a polynomial in the propensity score (Heckman and Vytlacil, 2005; the specification of Stata `mtefe`): marginal effect curve, ATE, ATT, ATUT, the 2SLS estimate for comparison, bootstrap inference, tests of essential and observed heterogeneity, propensity score overlap plot |
 
-Every analysis has *Method notes* and *Data and setup guide* in its Output section. Five example data sets are in the Data Library.
+Every analysis has *Method notes* and *Data and setup guide* in its Output section.
 
-## Example data (`data/`)
+## Install
+- **jamovi library**: in jamovi open the modules button (top right), *jamovi library*, find *Instrumental Variables Family* and install (once the module is listed).
+- **Sideload**: download the `.jmo` file and use *Install from file* in the same menu. A `.jmo` works only on the operating system, processor type and jamovi version it was built for.
+- **From source** (needs R and the jamovi compiler `jmvtools`; adjust the path to your jamovi folder):
+```r
+jmvtools::install(home = "C:/Program Files/jamovi 28.17.0.0")
+```
+
+## Use from R (Rj editor, scripts)
+Every analysis is also an R function, for example
+```r
+ivfamily::iv(data = d, outcome = "lq", endog = "lp", instruments = c("tdiff", "tax_r"), controls = "li", vce = "robust")
+```
+
+## Data format
+One row per observation. A numeric outcome, one or more endogenous regressors (numeric; binary 0/1 for the LATE and marginal-treatment-effect analyses),
+instruments, optional controls, cluster and fixed-effect variables and weights. Rows with missing values are dropped and reported. The shift-share analysis
+takes long-form data with one row per region and sector.
+
+## Example data
+Shown in jamovi under **Open > Data Library > Instrumental Variables Family**; each entry says which analysis to use and which variable goes where.
+Files in `data/` (`dev/make_data.R` rebuilds the AER-based files):
 
 | File | Source | Used for |
 |---|---|---|
 | `cigarettes_sw.csv` | `AER::CigarettesSW`, 1995 | IV Regression, Plausibly Exogenous Instruments |
 | `college_distance.csv` | `AER::CollegeDistance` | IV Regression |
 | `fertility.csv` | `AER::Fertility` (Angrist and Evans 1998) | Binary Instrument and LATE |
-| `sim_two_endogenous.csv` | simulated (`dev/` and `stata_validation/`) | First Stage, Overidentification |
+| `sim_two_endogenous.csv` | simulated | First Stage, Overidentification |
 | `sim_weak.csv` | simulated | Weak-Instrument-Robust Inference, Compare IV Estimators |
+| `sim_shiftshare.csv` | simulated: 500 regions, 40 sectors | Shift-Share IV |
+| `sim_mte.csv` | simulated schooling choice (generator `dev/make_data_mte.R`) | Marginal Treatment Effects |
 
-`dev/make_data.R` rebuilds the AER-based files.
+## References
+Papers and R packages behind each analysis appear in the References section of the jamovi output (defined in `jamovi/00refs.yaml`).
 
-## Design notes and limits
+## Validation
+`tests/reference.R` checks the engine against `AER`, `sandwich` and `fixest`; `tests/shiftshare.R` and `tests/mte.R` check the shift-share and marginal-treatment
+designs (the latter recovers a known marginal effect in a generalised Roy model: parameters, curve and coverage of the bootstrap interval). The Stata comparisons are in
+`../stata_validation/` (`compare_iv.R`, `compare_weak.R`, `compare_effective.R`, `compare_ar.R`, `compare_plaus_late.R`, `compare_mtefe_log.R`).
+Robust LIML standard errors differ from `ivreg2` by about 0.07%; everything else agrees to at least five digits; the marginal treatment effect curve and its
+ATE, ATT and ATUT agree with `mtefe` to 2e-7. `tests/smoke.R` runs every analysis headless (dozens of scenarios, including bad input).
 
+## Known limitations
 - Weights are analytic (as Stata's `aweight`): rescaling them changes nothing, replicating rows is not equivalent.
-- Weak-instrument-robust inference and the effective F are for one endogenous regressor. With several, use the conditional F
-  and the Kleibergen-Paap statistic in *First Stage and Weak Instruments*.
-- Not included: tF adjustments, TSLS- and LIML-specific effective-F critical values, shift-share and examiner designs,
-  marginal treatment effects, more than two sets of fixed effects.
-- Robust LIML standard errors differ from `ivreg2` by about 0.07%; everything else agrees to at least five digits
-  (see `PLAN.md` at the project root and `tests/`).
+- Weak-instrument-robust inference and the effective F are for one endogenous regressor. With several, use the conditional F and the Kleibergen-Paap statistic in *First Stage and Weak Instruments*.
+- Not included: tF adjustments, TSLS- and LIML-specific effective-F critical values, examiner designs, more than two sets of fixed effects.
+- Marginal treatment effects need an instrument that moves the propensity score over a wide range; the curve is estimated (and shown solid) only where the propensity score has support.
 
-## Build and test
+## Notes for developers
+- Layout: `R/engine_*.R` is plain R with no jamovi dependency; `R/*.b.R` and `jamovi/*.yaml` are the jamovi front end.
+- Tests: `Rscript tests/smoke.R`, `tests/reference.R`, `tests/shiftshare.R`, `tests/mte.R`; `tests/ui_checklist.md` lists what to check by hand in jamovi. Run them in jamovi's own R with the bundled libraries as well.
+- Ribbon icon: `icon/analysis-iv.svg` (74 x 44): instrument, regressor and outcome with a dashed unobserved confounder. jmvtools 28.17 cannot attach an icon to a module, so `dev/icon_preview.ps1` adds one CSS rule for the menu group to jamovi's client stylesheet (administrator PowerShell, restart jamovi afterwards).
 
-```r
-jmvtools::install(home = "C:/Program Files/jamovi 28.17.0.0")
-```
+## How to cite
+Sun, M. *ivfamily: Instrumental Variables Family for jamovi* (jamovi module). https://github.com/mingchao-sun/ivfamily. Please also cite the papers behind the analysis you use (listed in the output).
 
-`Rscript tests/smoke.R` runs every analysis headless (about 50 scenarios, including bad input); `Rscript tests/reference.R`
-checks the engine against `AER`, `sandwich` and `fixest`. Run both in jamovi's own R with the bundled libraries too
-(see `PLAN.md`). `tests/ui_checklist.md` lists what to look at by hand in jamovi. The Stata comparisons are in
-`../stata_validation/` (`compare_iv.R`, `compare_weak.R`, `compare_effective.R`, `compare_ar.R`, `compare_plaus_late.R`).
-
-## Ribbon icon
-
-`icon/analysis-iv.svg` (74 x 44, same size and colours as the other families): instrument, regressor and outcome as three circles with
-arrows, the effect arrow in orange, and a dashed unobserved confounder acting on the regressor and the outcome.
-jmvtools 28.17 cannot attach an icon to a module, so `dev/icon_preview.ps1` adds one CSS rule for the menu group IV to jamovi's client
-stylesheet (run it in an administrator PowerShell, see the comments at the top; restart jamovi afterwards). `dev/icon_preview.html`
-shows the icon at several sizes next to the other families.
-
-## Marginal Treatment Effects (0.3.0)
-
-`R/engine_mte.R` estimates marginal treatment effects (Heckman and Vytlacil, 2005) by local instrumental variables with a polynomial in the propensity score, in the specification of the Stata command `mtefe` (Andresen, 2018): marginal effect curve, ATE, ATT, ATUT, the 2SLS estimate for comparison, bootstrap inference, and Wald tests of essential and observed heterogeneity. `tests/mte.R` recovers a known marginal effect in a generalised Roy model (parameters, curve, coverage of the bootstrap interval); `stata_validation/18_mtefe.do` and `compare_mtefe.R` compare with `mtefe`. Example data: `data/sim_mte.csv` (generator `dev/make_data_mte.R`).
+## License
+GPL-3, as stated in `DESCRIPTION`; third-party code and data are listed in `NOTICE.md`. Bug reports and suggestions: https://github.com/mingchao-sun/ivfamily/issues
