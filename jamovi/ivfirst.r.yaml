@@ -1,0 +1,121 @@
+---
+name: ivfirst
+title: First Stage and Weak Instruments
+jrs: '1.1'
+
+items:
+    - name: guide
+      title: Data and setup guide
+      type: Html
+      visible: (showGuide)
+
+    - name: helpText
+      title: Method notes
+      type: Html
+      visible: (showHelp)
+
+    - name: notes
+      title: Notes
+      type: Html
+      visible: true
+
+    - name: joint
+      title: 'Joint statistics for all endogenous regressors'
+      type: Table
+      visible: true
+      clearWith:
+          - outcome
+          - endog
+          - instruments
+          - controls
+          - absorb
+          - cluster
+          - weights
+          - vce
+          - small
+      columns:
+          - name: stat
+            title: 'Statistic'
+            type: text
+          - name: value
+            title: 'Value'
+            type: number
+          - name: df
+            title: 'df'
+            type: text
+          - name: p
+            title: 'p'
+            type: number
+            format: zto,pvalue
+
+    - name: each
+      title: 'First stage, one endogenous regressor at a time'
+      type: Table
+      visible: true
+      clearWith:
+          - outcome
+          - endog
+          - instruments
+          - controls
+          - absorb
+          - cluster
+          - weights
+          - vce
+          - small
+      columns:
+          - name: term
+            title: 'Endogenous regressor'
+            type: text
+          - name: F
+            title: 'F'
+            type: number
+          - name: df1
+            title: 'df1'
+            type: integer
+          - name: df2
+            title: 'df2'
+            type: number
+          - name: p
+            title: 'p'
+            type: number
+            format: zto,pvalue
+          - name: r2
+            title: 'Partial R2'
+            type: number
+          - name: swF
+            title: 'Conditional F (Sanderson-Windmeijer)'
+            type: number
+          - name: swDf
+            title: 'Conditional df1'
+            type: integer
+
+    - name: reduced
+      title: 'Reduced form: outcome on the excluded instruments'
+      type: Table
+      visible: (showReduced)
+      clearWith:
+          - outcome
+          - endog
+          - instruments
+          - controls
+          - absorb
+          - cluster
+          - weights
+          - vce
+          - small
+      columns:
+          - name: term
+            title: 'Instrument'
+            type: text
+          - name: estimate
+            title: 'Estimate'
+            type: number
+          - name: se
+            title: 'Std. error'
+            type: number
+          - name: p
+            title: 'p'
+            type: number
+            format: zto,pvalue
+
+...

@@ -1,0 +1,99 @@
+title: Overidentification and Endogeneity
+name: ivover
+jus: '3.0'
+stage: 0
+compilerMode: tame
+children:
+    - type: VariableSupplier
+      persistentItems: false
+      stretchFactor: 1
+      children:
+          - type: TargetLayoutBox
+            label: Outcome
+            children:
+                - type: VariablesListBox
+                  name: outcome
+                  isTarget: true
+                  height: small
+                  maxItemCount: 1
+          - type: TargetLayoutBox
+            label: Endogenous regressors
+            children:
+                - type: VariablesListBox
+                  name: endog
+                  isTarget: true
+                  height: small
+          - type: TargetLayoutBox
+            label: Excluded instruments
+            children:
+                - type: VariablesListBox
+                  name: instruments
+                  isTarget: true
+                  height: small
+          - type: TargetLayoutBox
+            label: Exogenous controls
+            children:
+                - type: VariablesListBox
+                  name: controls
+                  isTarget: true
+                  height: small
+          - type: TargetLayoutBox
+            label: Absorbed fixed effects (max 2)
+            children:
+                - type: VariablesListBox
+                  name: absorb
+                  isTarget: true
+                  height: small
+                  maxItemCount: 2
+          - type: TargetLayoutBox
+            label: Cluster variables (max 2)
+            children:
+                - type: VariablesListBox
+                  name: cluster
+                  isTarget: true
+                  height: small
+                  maxItemCount: 2
+          - type: TargetLayoutBox
+            label: Weights
+            children:
+                - type: VariablesListBox
+                  name: weights
+                  isTarget: true
+                  height: small
+                  maxItemCount: 1
+          - type: TargetLayoutBox
+            label: Instruments to test (also used as instruments)
+            children:
+                - type: VariablesListBox
+                  name: suspects
+                  isTarget: true
+          - type: TargetLayoutBox
+            label: Regressors to test (also endogenous; empty = all)
+            children:
+                - type: VariablesListBox
+                  name: endogTest
+                  isTarget: true
+    - type: CollapseBox
+      label: Standard errors
+      collapsed: true
+      children:
+          - type: ComboBox
+            name: vce
+          - type: CheckBox
+            name: small
+    - type: CollapseBox
+      label: Tables
+      collapsed: true
+      children:
+          - type: CheckBox
+            name: showEach
+    - type: CollapseBox
+      label: Output
+      collapsed: true
+      children:
+          - type: CheckBox
+            name: showHelp
+            label: Method notes
+          - type: CheckBox
+            name: showGuide
+            label: Data and setup guide

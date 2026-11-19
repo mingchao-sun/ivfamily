@@ -1,0 +1,145 @@
+---
+name: iv
+title: IV Regression
+jas: '1.2'
+version: '0.1.0'
+menuGroup: IV
+menuSubgroup: Estimation
+menuTitle: IV Regression
+menuSubtitle: 2SLS, LIML, Fuller, GMM
+
+options:
+    - name: data
+      type: Data
+
+    - name: outcome
+      title: Outcome
+      type: Variable
+      suggested:
+          - continuous
+      permitted:
+          - numeric
+
+    - name: endog
+      title: Endogenous regressors
+      type: Variables
+      permitted:
+          - numeric
+
+    - name: instruments
+      title: Excluded instruments
+      type: Variables
+      permitted:
+          - numeric
+
+    - name: controls
+      title: Exogenous controls
+      type: Variables
+      suggested:
+          - continuous
+          - nominal
+      permitted:
+          - numeric
+          - factor
+
+    - name: absorb
+      title: Absorbed fixed effects
+      type: Variables
+      permitted:
+          - factor
+          - id
+          - numeric
+
+    - name: cluster
+      title: Cluster variables
+      type: Variables
+      permitted:
+          - factor
+          - id
+          - numeric
+
+    - name: weights
+      title: Weights
+      type: Variable
+      permitted:
+          - numeric
+
+    - name: method
+      title: Estimator
+      type: List
+      options:
+          - name: 2sls
+            title: 2SLS
+          - name: liml
+            title: LIML
+          - name: fuller
+            title: Fuller (modified LIML)
+          - name: kclass
+            title: k-class
+          - name: gmm
+            title: Two-step GMM
+      default: 2sls
+
+    - name: alpha
+      title: Fuller alpha
+      type: Number
+      default: 1
+      min: 0
+
+    - name: kvalue
+      title: k
+      type: Number
+      default: 1
+      min: 0
+
+    - name: vce
+      title: Standard errors
+      type: List
+      options:
+          - name: classical
+            title: Classical
+          - name: robust
+            title: Robust (HC1)
+          - name: cluster
+            title: Cluster-robust
+          - name: cluster2
+            title: Two-way cluster-robust
+      default: classical
+
+    - name: small
+      title: Small-sample corrections (t and F distributions)
+      type: Bool
+      default: true
+
+    - name: level
+      title: Confidence level (%)
+      type: Number
+      default: 95
+      min: 50
+      max: 99.9
+
+    - name: showOls
+      title: OLS comparison
+      type: Bool
+      default: true
+
+    - name: showFirst
+      title: First-stage regressions
+      type: Bool
+      default: true
+
+    - name: showControls
+      title: Show coefficients of controls
+      type: Bool
+      default: true
+
+    - name: showHelp
+      title: Method notes
+      type: Bool
+      default: false
+
+    - name: showGuide
+      title: Data and setup guide
+      type: Bool
+      default: false
+...

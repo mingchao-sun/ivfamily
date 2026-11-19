@@ -1,0 +1,135 @@
+---
+title: Instrumental Variables Family
+name: ivfamily
+version: 1.0.0
+jms: '1.0'
+authors:
+  - Mingchao Sun
+maintainer: Mingchao Sun <mingchao.sun@hotmail.com>
+date: '2026-11-20'
+type: R
+description: >-
+  Instrumental-variable regression: 2SLS, LIML, Fuller, k-class and two-step GMM
+  with classical, robust and cluster-robust standard errors, absorbed fixed
+  effects, first-stage and weak-instrument diagnostics and overidentification
+  tests.
+datasets:
+  - name: Cigarette demand (Stock and Watson)
+    path: cigarettes_sw.csv
+    description: >-
+      48 US states in 1995 (CigarettesSW, AER package). Outcome lq (log packs
+      per capita), endogenous regressor lp (log real price), control li (log
+      real income), instruments tdiff (real sales tax) and tax_r (real cigarette
+      excise tax).
+  - name: College distance and wages
+    path: college_distance.csv
+    description: >-
+      4,739 high-school students (CollegeDistance, AER package). Outcome wage,
+      endogenous regressor education, instruments distance and tuition, controls
+      gender, ethnicity, unemp (set gender and ethnicity to Nominal).
+  - name: Simulated two endogenous regressors
+    path: sim_two_endogenous.csv
+    description: >-
+      Simulated, 2,000 rows and 100 clusters (g): outcome y, endogenous
+      regressors x1 and x2, control w, instruments z1 to z4 (z3 is mildly
+      invalid and, with z4, drives x2). Heteroskedastic errors. Use for First
+      Stage and Weak Instruments and for Overidentification and Endogeneity.
+  - name: Simulated weak instruments
+    path: sim_weak.csv
+    description: >-
+      Simulated, 500 rows and 50 clusters (g): outcome y, one endogenous
+      regressor x (true coefficient 0.5), control w, three weak instruments z1,
+      z2, z3 (first-stage F about 5). Use for Weak-Instrument-Robust Inference.
+  - name: Family size and labour supply (Angrist and Evans)
+    path: fertility.csv
+    description: >-
+      254,654 mothers (Fertility, AER package): outcome weeks, binary treatment
+      morekids, binary instrument samesex, covariates age, boy1, afam, hispanic,
+      other. Use for Binary Instrument and LATE.
+  - name: Simulated shift-share design
+    path: sim_shiftshare.csv
+    description: >-
+      Simulated, 4,000 rows: 500 regions, 40 sectors, 8 sectors per region, in
+      long form. Outcome y, endogenous regressor d (true coefficient 0.5),
+      region, sector, share, shock, control x1, weights pop, region cluster
+      state, sector cluster sector_group. Use for Shift-Share (Bartik) IV.
+  - name: Simulated schooling choice (marginal treatment effects)
+    path: sim_mte.csv
+    description: >-
+      Simulated, 6,000 people: logwage, college (yes or no), score, female and
+      the instruments distance and tuition. Returns to college fall with the
+      unobserved resistance to going: the marginal treatment effect is 0.45 +
+      0.10 score - 0.30 times the normal quantile of u. Use for Marginal
+      Treatment Effects.
+analyses:
+  - name: iv
+    title: IV Regression
+    menuGroup: IV
+    menuSubgroup: Estimation
+    menuTitle: IV Regression
+    menuSubtitle: 2SLS, LIML, Fuller, GMM
+    ns: ivfamily
+    category: analyses
+  - title: First Stage and Weak Instruments
+    name: ivfirst
+    ns: ivfamily
+    category: analyses
+    menuGroup: IV
+    menuSubgroup: Diagnostics
+    menuTitle: First Stage and Weak Instruments
+  - title: Overidentification and Endogeneity
+    name: ivover
+    ns: ivfamily
+    category: analyses
+    menuGroup: IV
+    menuSubgroup: Diagnostics
+    menuTitle: Overidentification and Endogeneity
+  - title: Weak-Instrument-Robust Inference
+    name: ivweak
+    ns: ivfamily
+    category: analyses
+    menuGroup: IV
+    menuSubgroup: Diagnostics
+    menuTitle: Weak-Instrument-Robust Inference
+  - title: Compare IV Estimators
+    name: ivcmp
+    ns: ivfamily
+    category: analyses
+    menuGroup: IV
+    menuSubgroup: Estimation
+    menuTitle: Compare IV Estimators
+  - title: Binary Instrument and LATE
+    name: ivlate
+    ns: ivfamily
+    category: analyses
+    menuGroup: IV
+    menuSubgroup: Estimation
+    menuTitle: Binary Instrument and LATE
+    menuSubtitle: Compliers, always- and never-takers
+  - title: Plausibly Exogenous Instruments
+    name: ivplaus
+    ns: ivfamily
+    category: analyses
+    menuGroup: IV
+    menuSubgroup: Diagnostics
+    menuTitle: Plausibly Exogenous Instruments
+  - name: shiftshare
+    title: Shift-Share (Bartik) IV
+    menuGroup: IV
+    menuSubgroup: Estimation
+    menuTitle: Shift-Share (Bartik) IV
+    menuSubtitle: Exposure-robust standard errors (Adao, Kolesar and Morales)
+    ns: ivfamily
+    category: analyses
+  - title: Marginal Treatment Effects
+    name: ivmte
+    ns: ivfamily
+    category: analyses
+    menuGroup: IV
+    menuSubgroup: Estimation
+    menuTitle: Marginal Treatment Effects
+    menuSubtitle: 'Heckman and Vytlacil: effects by resistance to treatment, ATE, ATT, ATUT'
+usesNative: true
+minApp: 1.0.8
+
+...

@@ -1,0 +1,72 @@
+title: Binary Instrument and LATE
+name: ivlate
+jus: '3.0'
+stage: 0
+compilerMode: tame
+children:
+    - type: VariableSupplier
+      persistentItems: false
+      stretchFactor: 1
+      children:
+          - type: TargetLayoutBox
+            label: Outcome
+            children:
+                - type: VariablesListBox
+                  name: outcome
+                  isTarget: true
+                  maxItemCount: 1
+          - type: TargetLayoutBox
+            label: Binary treatment (0/1)
+            children:
+                - type: VariablesListBox
+                  name: treatment
+                  isTarget: true
+                  maxItemCount: 1
+          - type: TargetLayoutBox
+            label: Binary instrument (0/1)
+            children:
+                - type: VariablesListBox
+                  name: instrument
+                  isTarget: true
+                  maxItemCount: 1
+          - type: TargetLayoutBox
+            label: Exogenous controls
+            children:
+                - type: VariablesListBox
+                  name: controls
+                  isTarget: true
+          - type: TargetLayoutBox
+            label: Covariates to compare across groups
+            children:
+                - type: VariablesListBox
+                  name: profile
+                  isTarget: true
+          - type: TargetLayoutBox
+            label: Cluster variable
+            children:
+                - type: VariablesListBox
+                  name: cluster
+                  isTarget: true
+                  maxItemCount: 1
+    - type: CollapseBox
+      label: Standard errors
+      collapsed: true
+      children:
+          - type: ComboBox
+            name: vce
+          - type: CheckBox
+            name: small
+          - type: TextBox
+            name: level
+            label: Confidence level (%)
+            format: number
+    - type: CollapseBox
+      label: Output
+      collapsed: true
+      children:
+          - type: CheckBox
+            name: showHelp
+            label: Method notes
+          - type: CheckBox
+            name: showGuide
+            label: Data and setup guide

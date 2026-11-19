@@ -1,0 +1,89 @@
+---
+name: ivcmp
+title: Compare IV Estimators
+jrs: '1.1'
+
+items:
+    - name: guide
+      title: Data and setup guide
+      type: Html
+      visible: (showGuide)
+
+    - name: helpText
+      title: Method notes
+      type: Html
+      visible: (showHelp)
+
+    - name: notes
+      title: Notes
+      type: Html
+      visible: true
+
+    - name: est
+      title: 'Estimates of the endogenous regressors'
+      type: Table
+      visible: true
+      clearWith:
+          - outcome
+          - endog
+          - instruments
+          - controls
+          - absorb
+          - cluster
+          - weights
+          - vce
+          - small
+          - alpha
+          - level
+          - showOls
+          - showLiml
+          - showFuller
+          - showGmm
+      columns:
+          - name: method
+            title: 'Estimator'
+            type: text
+          - name: term
+            title: 'Variable'
+            type: text
+          - name: estimate
+            title: 'Estimate'
+            type: number
+          - name: se
+            title: 'Std. error'
+            type: number
+          - name: lo
+            title: 'CI lower'
+            type: number
+          - name: hi
+            title: 'CI upper'
+            type: number
+          - name: j
+            title: 'Overid. test'
+            type: text
+
+    - name: cmpPlot
+      title: Estimates with confidence intervals
+      type: Image
+      width: 640
+      height: 380
+      renderFun: .plotCmp
+      visible: (plot)
+      clearWith:
+          - outcome
+          - endog
+          - instruments
+          - controls
+          - absorb
+          - cluster
+          - weights
+          - vce
+          - small
+          - alpha
+          - level
+          - showOls
+          - showLiml
+          - showFuller
+          - showGmm
+
+...

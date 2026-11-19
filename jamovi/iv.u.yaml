@@ -1,0 +1,100 @@
+title: IV Regression
+name: iv
+jus: '3.0'
+stage: 0
+compilerMode: tame
+children:
+    - type: VariableSupplier
+      persistentItems: false
+      stretchFactor: 1
+      children:
+          - type: TargetLayoutBox
+            label: Outcome
+            children:
+                - type: VariablesListBox
+                  name: outcome
+                  isTarget: true
+                  maxItemCount: 1
+          - type: TargetLayoutBox
+            label: Endogenous regressors
+            children:
+                - type: VariablesListBox
+                  name: endog
+                  isTarget: true
+          - type: TargetLayoutBox
+            label: Excluded instruments
+            children:
+                - type: VariablesListBox
+                  name: instruments
+                  isTarget: true
+          - type: TargetLayoutBox
+            label: Exogenous controls
+            children:
+                - type: VariablesListBox
+                  name: controls
+                  isTarget: true
+          - type: TargetLayoutBox
+            label: Absorbed fixed effects (up to two)
+            children:
+                - type: VariablesListBox
+                  name: absorb
+                  isTarget: true
+                  maxItemCount: 2
+          - type: TargetLayoutBox
+            label: Cluster variables (up to two)
+            children:
+                - type: VariablesListBox
+                  name: cluster
+                  isTarget: true
+                  maxItemCount: 2
+          - type: TargetLayoutBox
+            label: Weights
+            children:
+                - type: VariablesListBox
+                  name: weights
+                  isTarget: true
+                  maxItemCount: 1
+    - type: CollapseBox
+      label: Estimation
+      collapsed: true
+      children:
+          - type: ComboBox
+            name: method
+          - type: TextBox
+            name: alpha
+            label: Fuller alpha
+            format: number
+            enable: (method:fuller)
+          - type: TextBox
+            name: kvalue
+            label: k
+            format: number
+            enable: (method:kclass)
+          - type: ComboBox
+            name: vce
+          - type: CheckBox
+            name: small
+          - type: TextBox
+            name: level
+            label: Confidence level (%)
+            format: number
+    - type: CollapseBox
+      label: Tables
+      collapsed: true
+      children:
+          - type: CheckBox
+            name: showOls
+          - type: CheckBox
+            name: showFirst
+          - type: CheckBox
+            name: showControls
+    - type: CollapseBox
+      label: Output
+      collapsed: true
+      children:
+          - type: CheckBox
+            name: showHelp
+            label: Method notes
+          - type: CheckBox
+            name: showGuide
+            label: Data and setup guide

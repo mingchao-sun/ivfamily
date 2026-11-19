@@ -1,0 +1,18 @@
+Package: ivfamily
+Type: Package
+Title: Instrumental Variables Family for jamovi
+Version: 1.0.0
+Author: Mingchao Sun
+Maintainer: Mingchao Sun <mingchao.sun@hotmail.com>
+URL: https://github.com/mingchao-sun/ivfamily
+BugReports: https://github.com/mingchao-sun/ivfamily/issues
+Description: Instrumental-variable analyses for jamovi: two-stage least squares, LIML, Fuller
+    and k-class estimators and two-step GMM with classical, robust and cluster-robust
+    standard errors and absorbed fixed effects, with first-stage and weak-instrument
+    diagnostics, overidentification tests and weak-instrument-robust inference.
+License: GPL-3
+Encoding: UTF-8
+Imports:
+    jmvcore (>= 2.3.4),
+    R6,
+    ggplot2

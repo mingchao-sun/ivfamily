@@ -1,0 +1,123 @@
+---
+name: ivplaus
+title: Plausibly Exogenous Instruments
+jas: '1.2'
+version: '0.1.0'
+menuGroup: IV
+menuSubgroup: Diagnostics
+menuTitle: Plausibly Exogenous Instruments
+
+options:
+    - name: data
+      type: Data
+
+    - name: outcome
+      title: Outcome
+      type: Variable
+      suggested:
+          - continuous
+      permitted:
+          - numeric
+
+    - name: endog
+      title: Endogenous regressors
+      type: Variables
+      permitted:
+          - numeric
+
+    - name: instruments
+      title: Excluded instruments
+      type: Variables
+      permitted:
+          - numeric
+
+    - name: controls
+      title: Exogenous controls
+      type: Variables
+      suggested:
+          - continuous
+          - nominal
+      permitted:
+          - numeric
+          - factor
+
+    - name: absorb
+      title: Absorbed fixed effects
+      type: Variables
+      permitted:
+          - factor
+          - id
+          - numeric
+
+    - name: cluster
+      title: Cluster variables
+      type: Variables
+      permitted:
+          - factor
+          - id
+          - numeric
+
+    - name: weights
+      title: Weights
+      type: Variable
+      permitted:
+          - numeric
+
+    - name: vce
+      title: Standard errors
+      type: List
+      options:
+          - name: classical
+            title: Classical
+          - name: robust
+            title: Robust (HC1)
+          - name: cluster
+            title: Cluster-robust
+          - name: cluster2
+            title: Two-way cluster-robust
+      default: classical
+
+    - name: small
+      title: Small-sample corrections (t and F distributions)
+      type: Bool
+      default: true
+
+    - name: delta
+      title: Direct effect of each instrument lies in [-delta, delta]
+      type: Number
+      default: 0
+      min: 0
+
+    - name: ltzMean
+      title: LTZ prior mean of the direct effects
+      type: Number
+      default: 0
+
+    - name: ltzSd
+      title: LTZ prior standard deviation (0 = no LTZ)
+      type: Number
+      default: 0
+      min: 0
+
+    - name: level
+      title: Confidence level (%)
+      type: Number
+      default: 95
+      min: 50
+      max: 99.9
+
+    - name: plot
+      title: Plot of the bounds against delta
+      type: Bool
+      default: true
+
+    - name: showHelp
+      title: Method notes
+      type: Bool
+      default: false
+
+    - name: showGuide
+      title: Data and setup guide
+      type: Bool
+      default: false
+...

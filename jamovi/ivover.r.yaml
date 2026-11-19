@@ -1,0 +1,140 @@
+---
+name: ivover
+title: Overidentification and Endogeneity
+jrs: '1.1'
+
+items:
+    - name: guide
+      title: Data and setup guide
+      type: Html
+      visible: (showGuide)
+
+    - name: helpText
+      title: Method notes
+      type: Html
+      visible: (showHelp)
+
+    - name: notes
+      title: Notes
+      type: Html
+      visible: true
+
+    - name: overid
+      title: 'Overidentification test (Sargan / Hansen J)'
+      type: Table
+      visible: true
+      clearWith:
+          - outcome
+          - endog
+          - instruments
+          - controls
+          - absorb
+          - cluster
+          - weights
+          - vce
+          - small
+      columns:
+          - name: stat
+            title: 'Statistic'
+            type: text
+          - name: value
+            title: 'Value'
+            type: number
+          - name: df
+            title: 'df'
+            type: integer
+          - name: p
+            title: 'p'
+            type: number
+            format: zto,pvalue
+
+    - name: ctest
+      title: 'Orthogonality of the selected instruments (C test)'
+      type: Table
+      visible: true
+      clearWith:
+          - outcome
+          - endog
+          - instruments
+          - controls
+          - absorb
+          - cluster
+          - weights
+          - vce
+          - small
+          - suspects
+      columns:
+          - name: label
+            title: 'Instruments tested'
+            type: text
+          - name: C
+            title: 'C'
+            type: number
+          - name: df
+            title: 'df'
+            type: integer
+          - name: p
+            title: 'p'
+            type: number
+            format: zto,pvalue
+
+    - name: endog
+      title: 'Endogeneity test (C test)'
+      type: Table
+      visible: true
+      clearWith:
+          - outcome
+          - endog
+          - instruments
+          - controls
+          - absorb
+          - cluster
+          - weights
+          - vce
+          - small
+          - endogTest
+      columns:
+          - name: label
+            title: 'Regressors tested'
+            type: text
+          - name: C
+            title: 'C'
+            type: number
+          - name: df
+            title: 'df'
+            type: integer
+          - name: p
+            title: 'p'
+            type: number
+            format: zto,pvalue
+
+    - name: each
+      title: 'C test dropping each excluded instrument in turn'
+      type: Table
+      visible: (showEach)
+      clearWith:
+          - outcome
+          - endog
+          - instruments
+          - controls
+          - absorb
+          - cluster
+          - weights
+          - vce
+          - small
+      columns:
+          - name: label
+            title: 'Instrument dropped'
+            type: text
+          - name: C
+            title: 'C'
+            type: number
+          - name: df
+            title: 'df'
+            type: integer
+          - name: p
+            title: 'p'
+            type: number
+            format: zto,pvalue
+
+...

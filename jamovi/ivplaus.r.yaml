@@ -1,0 +1,134 @@
+---
+name: ivplaus
+title: Plausibly Exogenous Instruments
+jrs: '1.1'
+
+items:
+    - name: guide
+      title: Data and setup guide
+      type: Html
+      visible: (showGuide)
+
+    - name: helpText
+      title: Method notes
+      type: Html
+      visible: (showHelp)
+
+    - name: notes
+      title: Notes
+      type: Html
+      visible: true
+
+    - name: tip
+      title: 'Tipping point: smallest delta whose union interval contains zero'
+      type: Table
+      visible: true
+      clearWith:
+          - outcome
+          - endog
+          - instruments
+          - controls
+          - absorb
+          - cluster
+          - weights
+          - vce
+          - small
+          - level
+      columns:
+          - name: term
+            title: 'Endogenous regressor'
+            type: text
+          - name: estimate
+            title: '2SLS estimate'
+            type: number
+          - name: tip
+            title: 'Tipping delta'
+            type: number
+
+    - name: uci
+      title: 'Union of confidence intervals for direct effects in [-delta, delta]'
+      type: Table
+      visible: true
+      clearWith:
+          - outcome
+          - endog
+          - instruments
+          - controls
+          - absorb
+          - cluster
+          - weights
+          - vce
+          - small
+          - delta
+          - level
+      columns:
+          - name: term
+            title: 'Endogenous regressor'
+            type: text
+          - name: delta
+            title: 'delta'
+            type: number
+          - name: lo
+            title: 'Lower'
+            type: number
+          - name: hi
+            title: 'Upper'
+            type: number
+          - name: zero
+            title: 'Contains zero'
+            type: text
+
+    - name: ltz
+      title: 'Local-to-zero approximation'
+      type: Table
+      visible: (ltzSd)
+      clearWith:
+          - outcome
+          - endog
+          - instruments
+          - controls
+          - absorb
+          - cluster
+          - weights
+          - vce
+          - small
+          - ltzMean
+          - ltzSd
+          - level
+      columns:
+          - name: term
+            title: 'Endogenous regressor'
+            type: text
+          - name: estimate
+            title: 'Adjusted estimate'
+            type: number
+          - name: se
+            title: 'Std. error'
+            type: number
+          - name: lo
+            title: 'CI lower'
+            type: number
+          - name: hi
+            title: 'CI upper'
+            type: number
+
+    - name: plausPlot
+      title: Bounds of the union interval against delta
+      type: Image
+      width: 640
+      height: 400
+      renderFun: .plotPlaus
+      visible: (plot)
+      clearWith:
+          - outcome
+          - endog
+          - instruments
+          - controls
+          - absorb
+          - cluster
+          - weights
+          - vce
+          - small
+          - level
+
+...

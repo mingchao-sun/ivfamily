@@ -1,0 +1,195 @@
+---
+name: iv
+title: IV Regression
+jrs: '1.1'
+
+items:
+    - name: guide
+      title: Data and setup guide
+      type: Html
+      visible: (showGuide)
+
+    - name: helpText
+      title: Method notes
+      type: Html
+      visible: (showHelp)
+
+    - name: notes
+      title: Notes
+      type: Html
+      visible: true
+
+    - name: coef
+      title: Second-stage estimates
+      type: Table
+      visible: true
+      refs:
+          - stockwatson2019
+          - baum2007
+      clearWith:
+          - outcome
+          - endog
+          - instruments
+          - controls
+          - absorb
+          - cluster
+          - weights
+          - method
+          - alpha
+          - kvalue
+          - vce
+          - small
+          - level
+          - showControls
+      columns:
+          - name: term
+            title: Variable
+            type: text
+          - name: type
+            title: Role
+            type: text
+          - name: estimate
+            title: Estimate
+            type: number
+          - name: se
+            title: Std. error
+            type: number
+          - name: stat
+            title: t / z
+            type: number
+          - name: p
+            title: p
+            type: number
+            format: zto,pvalue
+          - name: lo
+            title: CI lower
+            type: number
+          - name: hi
+            title: CI upper
+            type: number
+
+    - name: ols
+      title: OLS compared with IV
+      type: Table
+      visible: (showOls)
+      clearWith:
+          - outcome
+          - endog
+          - instruments
+          - controls
+          - absorb
+          - cluster
+          - weights
+          - method
+          - alpha
+          - kvalue
+          - vce
+          - small
+      columns:
+          - name: term
+            title: Endogenous regressor
+            type: text
+          - name: ols
+            title: OLS
+            type: number
+          - name: olsSe
+            title: OLS s.e.
+            type: number
+          - name: iv
+            title: IV
+            type: number
+          - name: ivSe
+            title: IV s.e.
+            type: number
+          - name: diff
+            title: IV minus OLS
+            type: number
+
+    - name: firstF
+      title: First stage, excluded instruments
+      type: Table
+      visible: true
+      clearWith:
+          - outcome
+          - endog
+          - instruments
+          - controls
+          - absorb
+          - cluster
+          - weights
+          - vce
+          - small
+      columns:
+          - name: term
+            title: Endogenous regressor
+            type: text
+          - name: F
+            title: F
+            type: number
+          - name: df1
+            title: df1
+            type: integer
+          - name: df2
+            title: df2
+            type: number
+          - name: p
+            title: p
+            type: number
+            format: zto,pvalue
+          - name: r2
+            title: Partial R²
+            type: number
+
+    - name: first
+      title: First-stage coefficients of the excluded instruments
+      type: Table
+      visible: (showFirst)
+      clearWith:
+          - outcome
+          - endog
+          - instruments
+          - controls
+          - absorb
+          - cluster
+          - weights
+          - vce
+          - small
+      columns:
+          - name: term
+            title: Endogenous regressor
+            type: text
+          - name: instrument
+            title: Instrument
+            type: text
+          - name: coef
+            title: Estimate
+            type: number
+          - name: se
+            title: Std. error
+            type: number
+
+    - name: summary
+      title: Model summary
+      type: Table
+      visible: true
+      clearWith:
+          - outcome
+          - endog
+          - instruments
+          - controls
+          - absorb
+          - cluster
+          - weights
+          - method
+          - alpha
+          - kvalue
+          - vce
+          - small
+      columns:
+          - name: item
+            title: ''
+            type: text
+          - name: value
+            title: ''
+            type: text
+...

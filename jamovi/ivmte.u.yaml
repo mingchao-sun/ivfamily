@@ -1,0 +1,86 @@
+title: 'Marginal Treatment Effects'
+name: ivmte
+jus: '3.0'
+stage: 0
+compilerMode: tame
+children:
+    - type: VariableSupplier
+      persistentItems: false
+      stretchFactor: 1
+      children:
+          - type: TargetLayoutBox
+            label: 'Outcome'
+            children:
+                - type: VariablesListBox
+                  name: outcome
+                  isTarget: true
+                  height: small
+                  maxItemCount: 1
+          - type: TargetLayoutBox
+            label: 'Binary treatment (0/1)'
+            children:
+                - type: VariablesListBox
+                  name: treat
+                  isTarget: true
+                  height: small
+                  maxItemCount: 1
+          - type: TargetLayoutBox
+            label: 'Instruments (excluded from the outcome)'
+            children:
+                - type: VariablesListBox
+                  name: instruments
+                  isTarget: true
+                  height: small
+          - type: TargetLayoutBox
+            label: 'Covariates (optional)'
+            children:
+                - type: VariablesListBox
+                  name: covs
+                  isTarget: true
+                  height: small
+          - type: TargetLayoutBox
+            label: 'Cluster (optional)'
+            children:
+                - type: VariablesListBox
+                  name: cluster
+                  isTarget: true
+                  height: small
+                  maxItemCount: 1
+    - type: CollapseBox
+      label: 'Model'
+      collapsed: false
+      children:
+          - type: TextBox
+            name: degree
+            label: 'Degree of the polynomial in the marginal treatment effect'
+            format: number
+          - type: ComboBox
+            name: link
+    - type: CollapseBox
+      label: 'Inference'
+      collapsed: true
+      children:
+          - type: TextBox
+            name: nboot
+            label: 'Bootstrap samples'
+            format: number
+          - type: TextBox
+            name: level
+            label: 'Confidence level (%)'
+            format: number
+          - type: TextBox
+            name: seed
+            label: 'Random seed'
+            format: number
+          - type: CheckBox
+            name: plot
+    - type: CollapseBox
+      label: 'Output'
+      collapsed: true
+      children:
+          - type: CheckBox
+            name: showHelp
+            label: 'Method notes'
+          - type: CheckBox
+            name: showGuide
+            label: 'Data and setup guide'

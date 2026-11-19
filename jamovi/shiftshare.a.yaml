@@ -1,0 +1,129 @@
+---
+name: shiftshare
+title: Shift-Share (Bartik) IV
+jas: '1.2'
+version: '1.0.0'
+menuGroup: IV
+menuSubgroup: Estimation
+menuTitle: Shift-Share (Bartik) IV
+menuSubtitle: Exposure-robust standard errors (Adao, Kolesar and Morales)
+
+options:
+    - name: data
+      type: Data
+
+    - name: outcome
+      title: Outcome (region level)
+      type: Variable
+      suggested:
+          - continuous
+      permitted:
+          - numeric
+
+    - name: endog
+      title: Endogenous regressor (region level)
+      type: Variable
+      suggested:
+          - continuous
+      permitted:
+          - numeric
+
+    - name: region
+      title: Region
+      type: Variable
+      permitted:
+          - numeric
+          - factor
+          - id
+
+    - name: sector
+      title: Sector (shock)
+      type: Variable
+      permitted:
+          - numeric
+          - factor
+          - id
+
+    - name: share
+      title: Exposure share (region by sector)
+      type: Variable
+      suggested:
+          - continuous
+      permitted:
+          - numeric
+
+    - name: shock
+      title: Shock (sector level)
+      type: Variable
+      suggested:
+          - continuous
+      permitted:
+          - numeric
+
+    - name: controls
+      title: Controls (region level)
+      type: Variables
+      suggested:
+          - continuous
+          - nominal
+      permitted:
+          - numeric
+          - factor
+
+    - name: weights
+      title: Weights (region level)
+      type: Variable
+      suggested:
+          - continuous
+      permitted:
+          - numeric
+
+    - name: regionCluster
+      title: Region cluster (for example state)
+      type: Variable
+      permitted:
+          - numeric
+          - factor
+          - id
+
+    - name: sectorCluster
+      title: Sector cluster (for example industry group)
+      type: Variable
+      permitted:
+          - numeric
+          - factor
+          - id
+
+    - name: sumShares
+      title: Control for the sum of the shares
+      type: Bool
+      default: false
+
+    - name: h0
+      title: Value of the coefficient under the null
+      type: Number
+      default: 0
+
+    - name: level
+      title: Confidence level (%)
+      type: Number
+      default: 95
+      min: 50
+      max: 99.9
+
+    - name: showStages
+      title: First stage and reduced form
+      type: Bool
+      default: true
+
+    - name: showHelp
+      title: Method notes
+      type: Bool
+      default: false
+
+    - name: showGuide
+      title: Data and setup guide
+      type: Bool
+      default: false
+
+...
