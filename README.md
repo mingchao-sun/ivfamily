@@ -30,9 +30,9 @@ jmvtools::install(home = "C:/Program Files/jamovi 28.17.0.0")
 ```
 
 ## Use from R (Rj editor, scripts)
-Every analysis is also an R function, for example
+Every analysis is also an R function. The functions are not exported, so call them as `module:::function`, and pass `NULL` for the arguments you do not use (they have no default values). For example, after installing the module,
 ```r
-ivfamily::iv(data = d, outcome = "lq", endog = "lp", instruments = c("tdiff", "tax_r"), controls = "li", vce = "robust")
+ivfamily:::iv(data = d, outcome = "lq", endog = "lp", instruments = c("tdiff", "tax_r"), controls = "li", absorb = NULL, cluster = NULL, weights = NULL, vce = "robust")
 ```
 
 ## Data format
